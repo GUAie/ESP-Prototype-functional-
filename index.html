@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Energy Saving Pro - Login</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Splash Screen -->
+  <div class="splash-screen" id="splashScreen">
+    <div class="logo-container">
+        <img src="D:\AppDev\PWA - Copy - Copy - Copy\Icon\Icon 1.png" alt="Energy Saving Pro Logo" class="logo-image">
+        <div class="loading-bar">
+            <div class="loading-progress"></div>
+        </div>
+    </div>
+</div>
+    
+    <!-- Login Container -->
+    <div class="form-container">
+        <div class="form-header">
+            <div class="form-title">Energy Saving Pro</div>
+        </div>
+        
+        <h2 class="welcome-text">Welcome back</h2>
+        
+        <form id="loginForm">
+            <div class="input-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" placeholder="Enter your email" required>
+            </div>
+            
+            <div class="input-group">
+                <label for="password">Password</label>
+                <div class="password-container">
+                    <input type="password" id="password" placeholder="Enter your password" required>
+                    <button type="button" onclick="togglePassword('password')" class="password-toggle">
+                        👁️
+                    </button>
+            </div>
+
+            <div class="button-group">
+                <button type="submit" class="btn btn-primary">Login</button>
+                <a href="CreateAccount.html" class="btn btn-secondary">Create Account</a>
+            </div>
+            
+        </form>
+        
+        <p class="footer-text">© 2025 Energy Saving Pro. All rights reserved.</p>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/dexie@3.2.4/dist/dexie.min.js"></script>
+    <script src="database.js"></script>
+    <script src="script.js"></script>
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#4CAF50">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">   
+    <title>Create Account - Energy Saving Pro</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="form-container">
+        <div class="form-header">
+            <div class="form-title">Create Account</div>
+        </div>
+        
+        <h2 class="welcome-text">Join Energy Saving Pro</h2>
+        
+        <form id="createAccountForm">
+            <div class="input-group">
+                <label for="surname">Surname</label>
+                <input type="text" id="surname" placeholder="Enter your surname" required>
+            </div>
+            <div class="input-group">
+                <label for="firstname">First Name</label>
+                <input type="text" id="firstname" placeholder="Enter your first name" required>
+            </div>
+            <div class="input-group">
+                <label for="middlename">Middle Name</label>
+                <input type="text" id="middlename" placeholder="Enter your middle name (optional)">
+            </div>
+            <div class="input-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" placeholder="Enter your email">
+            </div>
+            
+            <div class="input-group">
+                <label for="password">Password</label>
+                <div class="password-container">
+                    <input type="password" id="password" placeholder="Create a password" required>
+                    <button type="button" onclick="togglePassword('password')" class="password-toggle">
+                        👁️
+                    </button>
+                </div>
+                <div class="real-time-feedback" id="passwordFeedback"></div>
+                
+                <!-- Password Requirements -->
+                <div class="password-requirements" id="passwordRequirements">
+                    <div class="requirement invalid" id="reqLength">
+                        <span class="requirement-icon"></span>
+                        At least 8 characters
+                    </div>
+                    <div class="requirement invalid" id="reqCapital">
+                        <span class="requirement-icon"></span>
+                        One capital letter (A-Z)
+                    </div>
+                    <div class="requirement invalid" id="reqNumber">
+                        <span class="requirement-icon"></span>
+                        One number (0-9)
+                    </div>
+                    <div class="requirement invalid" id="reqSpecial">
+                        <span class="requirement-icon"></span>
+                        One special character (!@#$%^&*()-_=+{};:,<.>)
+                    </div>
+                </div>
+                
+                <!-- Password Strength Meter -->
+                <div class="password-strength">
+                    <div class="strength-bar" id="passwordStrength"></div>
+                </div>
+            </div>
+            
+            <div class="input-group">
+                <label for="confirmPassword">Repeat Password</label>
+                <div class="password-container">
+                    <input type="password" id="confirmPassword" placeholder="Confirm your password" required>
+                    <button type="button" onclick="togglePassword('confirmPassword')" class="password-toggle">
+                        👁️
+                    </button>
+                </div>
+                <div class="real-time-feedback" id="confirmPasswordFeedback"></div>
+            </div>
+            
+            <!-- Terms and Conditions -->
+            <div class="input-group">
+                <div class="checkbox-group">
+                    <input type="checkbox" id="termsOfUse" required disabled>
+                    <label for="termsOfUse">
+                        I agree to the <a href="#" onclick="openTermsModal()" class="link-text">Terms of Use</a>
+                    </label>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="privacyPolicy" required disabled>
+                    <label for="privacyPolicy">
+                        I agree to the <a href="#" onclick="openPrivacyModal()" class="link-text">Data Privacy Policy</a>
+                    </label>
+                </div>
+            </div>
+            
+            <div class="button-group">
+                <button type="submit" class="btn btn-primary btn-create-account">Create Account</button>
+                <a href="index.html" class="btn btn-secondary">Back to Login</a>
+            </div>
+        </form>
+        
+        <p class="footer-text">© 2025 Energy Saving Pro. All rights reserved.</p>
+    </div>
+
+    <!-- Terms of Use Modal -->
+    <div id="termsModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close" onclick="closeTermsModal()">&times;</span>
+            <h3>Terms of Use</h3>
+            <div class="modal-body">
+                <p><strong>Energy Saving Pro Terms of Use</strong></p>
+                <p>Last updated: 2025</p>
+                <div class="scroll-notice">
+                    Please scroll to the bottom to enable the Terms of Use checkbox
+                </div>
+                
+                <p>1. <strong>Acceptance of Terms</strong><br>
+                By accessing and using Energy Saving Pro, you accept and agree to be bound by the terms and provision of this agreement.</p>
+                
+                <p>2. <strong>Use License</strong><br>
+                Permission is granted to temporarily use Energy Saving Pro for personal, non-commercial transitory viewing only.</p>
+                
+                <p>3. <strong>Disclaimer</strong><br>
+                Ad blockers and browser restrictions can interfere with the functionality of Energy Saving Pro.</p>
+                
+                <p>4. <strong>Limitations</strong><br>
+                In no event shall Energy Saving Pro or its developers be liable for any damages arising out of the use or inability to use the website.</p>
+                
+                <p>5. <strong>Modifications</strong><br>
+                Energy Saving Pro may revise these terms of service at any time without notice.</p>
+                
+                <p>6. <strong>Governing Law</strong><br>
+                These terms and conditions are governed by and construed in accordance with the laws of the Philippines.</p>
+                
+        
+            </div>
+            <button class="btn btn-primary" onclick="closeTermsModal()">I Understand</button>
+        </div>
+    </div>
+
+    <!-- Privacy Policy Modal -->
+    <div id="privacyModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close" onclick="closePrivacyModal()">&times;</span>
+            <h3>Data Privacy Policy</h3>
+            <div class="modal-body">
+
+                <p><strong>Energy Saving Pro Privacy Policy</strong></p>
+                <p>Last updated: 2025</p>
+
+                <div class="scroll-notice">
+                    Please scroll to the bottom to enable the Data Privacy Policy checkbox
+                </div>
+                <p>1. <strong>Information We Collect</strong><br>
+                We do not collect any personal information you provide directly to us; be it your name, email address, and energy usage data.</p>
+
+                <p>2. <strong>Data Storage and Security</strong><br>
+                Your data is stored locally on your device. You have full control over your data. </p>
+                
+                <p>3. <strong>Data Sharing</strong><br>
+                We do not sell, trade, or otherwise transfer your personally identifiable information to third parties.</p>
+                
+                <p>5. <strong>Your Rights</strong></p>
+                <p>You have the right to:</p>
+                <ul>
+                    <li>-Access your personal data</li>
+                    <li>-Correct inaccurate data</li>
+                    <li>-Request deletion of your data</li>
+                    <li>-Object to processing of your data</li>
+                </ul>
+                
+                <p>6. <strong>Cookies and Tracking</strong><br>
+                We may use cookies and similar tracking technologies to track activity on our service.</p>
+                
+                <p>7. <strong>Changes to This Policy</strong><br>
+                We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page.</p>
+                
+                <p>8. <strong>Contact Us</strong><br>
+                If you have any questions about this Privacy Policy, please contact us.</p>
+                
+                
+            </div>
+            <button class="btn btn-primary" onclick="closePrivacyModal()">I Understand</button>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/dexie@3.2.4/dist/dexie.min.js"></script>
+    <script src="database.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

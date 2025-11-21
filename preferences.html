@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preferences - Energy Saving Pro</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Header -->
+        <header class="dashboard-header">
+            <div class="header-left">
+                <h1>Energy Saving Pro</h1>
+                <div class="header-user-info">
+                    <span class="header-welcome">Welcome, <strong id="userName"></strong></span>
+                    <span class="header-location" id="userLocation"></span>
+                </div>
+            </div>
+            <div class="header-right">
+                <div class="header-controls">
+                    <div class="inbox">
+                        <span class="inbox-count">4</span>
+                        <span class="inbox-label">Notifications</span>
+                    </div>
+                    <button class="btn btn-logout" onclick="logout()">Logout</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Sticky Navigation -->
+        <nav class="dashboard-nav">
+            <a href="dashboard.html" class="nav-item">Dashboard</a>
+            <a href="calculators.html" class="nav-item">Calculators</a>
+            <a href="preferences.html" class="nav-item">Preferences</a>
+            
+        </nav>
+
+        <!-- Main Content -->
+        <main class="dashboard-main">
+            <!-- User Profile & Settings Module -->
+            <section id="user-profile" class="module">
+                <h2>User Profile & Settings</h2>
+                <div class="module-content">
+                    <div class="profile-sections">
+                        <div class="profile-section">
+                            <h3>Personal Information</h3>
+                            <form id="personalInfoForm">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="lastName">Last Name</label>
+                                        <input type="text" id="lastName" placeholder="Enter your last name" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="firstName">First Name</label>
+                                        <input type="text" id="firstName" placeholder="Enter your first name" required>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="middleName">Middle Name (Optional)</label>
+                                        <input type="text" id="middleName" placeholder="Enter your middle name">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="userEmail">Email Address</label>
+                                        <input type="email" id="userEmail" placeholder="Enter your email" required>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="phoneNumber">Phone Number</label>
+                                        <input type="number" id="phoneNumber" placeholder="Enter your phone number">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="householdSize">Household Size</label>
+                                        <input type="number" id="householdSize" placeholder="Number of people" value="4" min="1">
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Update Personal Info</button>
+                                <button type="button" class="btn btn-danger" onclick="handleDeleteAccount()" style="background-color: #f44336; color: white; margin-top: 10px;">Delete Account</button>
+                            </form>
+                        </div>
+                        
+                        <div class="profile-section">
+                            <h3>Location & Electricity Tariff</h3>
+                            <form id="locationTariffForm">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="region">Region</label>
+                                        <input type="text" id="region" placeholder="Enter region" value="NCR">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="province">Province</label>
+                                        <input type="text" id="province" placeholder="Enter province" value="Metro Manila">
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="city">City/Municipality</label>
+                                        <input type="text" id="city" placeholder="Enter city" value="Quezon City">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="zipCode">ZIP Code</label>
+                                        <input type="number" id="zipCode" placeholder="Enter ZIP code" value="1100">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="electricityProvider">Electricity Provider</label>
+                                    <input type="text" id="electricityProvider" placeholder="Enter electricity provider:" value="Meralco">
+                                </div>
+                                <div class="form-group">
+                                    <label for="electricityTariff">Electricity Tariff Rate (₱/kWh)</label>
+                                    <div class="tariff-input-group">
+                                        <input type="number" id="electricityTariff" placeholder="11.00" value="11.00" step="0.01" min="0">
+                                        <span class="tariff-unit">₱/kWh</span>
+                                    </div>
+                                    <small class="help-text">Average PH rate: ₱8.00-₱15.00/kWh. This rate will be used for all cost calculations.</small>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Update Location & Tariff</button>
+                            </form>
+                        </div>
+
+                        <div class="profile-section">
+                            <h3>Application Preferences</h3>
+                            <form id="preferencesForm">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="energyUnit">Energy Unit</label>
+                                        <select id="energyUnit">
+                                            <option value="kWh" selected>kWh</option>
+                                            <option value="MWh">MWh</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="carbonUnit">Carbon Emission Unit</label>
+                                        <select id="carbonUnit">
+                                            <option value="kg" selected>Kilograms (kg)</option>
+                                            <option value="tons">Tons</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="timeFormat">Time Format</label>
+                                        <select id="timeFormat">
+                                            <option value="12h">12-hour</option>
+                                            <option value="24h" selected>24-hour</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="dateFormat">Date Format</label>
+                                        <select id="dateFormat">
+                                            <option value="MM/DD/YYYY">MM/DD/YYYY</option>
+                                            <option value="DD/MM/YYYY" selected>DD/MM/YYYY</option>
+                                            <option value="YYYY-MM-DD">YYYY-MM-DD</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Save Preferences</button>
+                            </form>
+                        </div>
+
+                        <div class="profile-section">
+                            <h3>Profile Summary</h3>
+                            <div class="profile-summary">
+                                <div class="summary-item">
+                                    <span class="summary-label">Name:</span>
+                                    <span class="summary-value" id="summaryName">Not set</span>
+                                </div>
+                                <div class="summary-item">
+                                    <span class="summary-label">Location:</span>
+                                    <span class="summary-value" id="summaryLocation">Not set</span>
+                                </div>
+                                <div class="summary-item">
+                                    <span class="summary-label">Provider:</span>
+                                    <span class="summary-value" id="summaryProvider">Not set</span>
+                                </div>
+                                <div class="summary-item">
+                                    <span class="summary-label">Tariff Rate:</span>
+                                    <span class="summary-value" id="summaryTariff">Not set</span>
+                                </div>
+                                <div class="summary-item">
+                                    <span class="summary-label">Household:</span>
+                                    <span class="summary-value" id="summaryHousehold">Not set</span>
+                                </div>
+                                <div class="summary-item">
+                                    <span class="summary-label">Member Since:</span>
+                                    <span class="summary-value" id="summaryJoinDate">Not Set</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Notifications Module -->
+            <section id="notifications" class="module">
+                <h2>Smart Notification System</h2>
+                <div class="module-content">
+                    <div class="notification-settings">
+                        <h3>Notification Preferences</h3>
+                        <div class="setting-item">
+                            <label class="switch">
+                                <input type="checkbox" id="budgetAlerts" checked>
+                                <span class="slider"></span>
+                            </label>
+                            <span>Budget Limit Alerts</span>
+                        </div>
+                        <div class="setting-item">
+                            <label class="switch">
+                                <input type="checkbox" id="goalProgressAlerts">
+                                <span class="slider"></span>
+                            </label>
+                            <span>Goal Progress Updates</span>
+                        </div>
+                    </div>
+                    <div class="notification-test">
+                        <h3>Test Notifications</h3>
+                        <button onclick="testBudgetAlert()" class="btn btn-secondary">Test Budget Limit Alert</button>
+                        <button onclick="testGoalProgress()" class="btn btn-secondary">Test Goal Progress Updates</button>
+                        <button onclick="testLimitExceeded()" class="btn btn-secondary">Test Limit Exceeded</button>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Delete Account Modal -->
+    <div id="deleteAccountModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Delete Account</h3>
+                <span class="close" onclick="closeDeleteAccountModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="warning-message">
+                    <strong>⚠️ Warning: This action cannot be undone!</strong>
+                    <p style="margin-bottom: 15px;">All your data will be permanently deleted, including:</p>
+                    <ul>
+                        <li>Personal information and profile</li>
+                        <li>Appliance data and usage history</li>
+                        <li>Goals and progress tracking</li>
+                        <li>Notification history</li>
+                        <li>All settings and preferences</li>
+                    </ul>
+                    <p style="margin-top: 15px; margin-bottom: 0;"><strong>You will not be able to recover your account after deletion.</strong></p>
+                </div>
+                <div class="form-group">
+                    <label for="confirmDeletePassword">Enter your password to confirm account deletion</label>
+                    <input type="password" id="confirmDeletePassword" placeholder="Enter your current password" required>
+                    <div id="deletePasswordFeedback" class="real-time-feedback"></div>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button class="btn btn-tertiary" onclick="closeDeleteAccountModal()">Cancel</button>
+                <button class="btn btn-danger" onclick="confirmDeleteAccount()" id="confirmDeleteBtn" disabled>Delete Account Permanently</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Modal -->
+    <div id="notificationModal" class="notification-modal">
+        <div class="notification-modal-content">
+            <div class="notification-modal-header">
+                <h3>Notifications</h3>
+                <div class="notification-actions">
+                    <button class="btn-mark-all-read" onclick="markAllAsRead()">Mark All as Read</button>
+                    <button class="btn-clear-all" onclick="clearAllNotifications()">Clear All</button>
+                    <span class="close-modal" onclick="closeNotificationModal()">&times;</span>
+                </div>
+            </div>
+            <div class="notification-modal-body">
+                <div id="notificationsList" class="notifications-list">
+                    <!-- Notifications will be dynamically added here -->
+                </div>
+                <div id="emptyNotifications" class="empty-notifications">
+                    <div class="empty-icon">🔔</div>
+                    <p>No notifications yet</p>
+                    <small>You're all caught up!</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dark Mode Toggle -->
+    <div class="dark-mode-toggle">
+        <label class="toggle-switch">
+            <input type="checkbox" id="darkModeToggle">
+            <span class="toggle-slider"></span>
+            <span class="toggle-label">Dark Mode</span>
+        </label>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/dexie@3.2.4/dist/dexie.min.js"></script>
+    <script src="database.js"></script>
+    <script src="script.js"></script>
+    <script src="preferences.js"></script>
+</body>
+</html>

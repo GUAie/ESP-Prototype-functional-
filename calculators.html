@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculators - Energy Saving Pro</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Header -->
+        <header class="dashboard-header">
+            <div class="header-left">
+                <h1>Energy Saving Pro</h1>
+                <div class="header-user-info">
+                    <span class="header-welcome">Welcome, <strong id="userName"></strong></span>
+                    <span class="header-location" id="userLocation"></span>
+                </div>
+            </div>
+            <div class="header-right">
+                <div class="header-controls">
+                    <div class="inbox">
+                        <span class="inbox-count">4</span>
+                        <span class="inbox-label">Notifications</span>
+                    </div>
+                    <button class="btn btn-logout" onclick="logout()">Logout</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Sticky Navigation -->
+        <nav class="dashboard-nav">
+            <a href="dashboard.html" class="nav-item">Dashboard</a>
+            <a href="calculators.html" class="nav-item">Calculators</a>
+            <a href="preferences.html" class="nav-item">Preferences</a>
+           
+        </nav>
+
+        <!-- Main Content -->
+        <main class="dashboard-main">
+            <!-- Carbon Calculator Module -->
+            <section id="carbon-calculator" class="module">
+                <h2>Carbon Footprint Calculator</h2>
+                <div class="module-content">
+                    <div class="carbon-calc">
+                        <div class="calc-input">
+                            <h3>Calculate Carbon Emissions</h3>
+                            <div class="form-group">
+                                <label for="energyConsumption">Total Energy Consumption (kWh)</label>
+                                <input type="number" id="energyConsumption" placeholder="Enter kWh" value="8.5">
+                            </div>
+                            <button onclick="calculateCarbon()" class="btn btn-primary">Calculate CO₂</button>
+                        </div>
+                        <div class="calc-result">
+                            <div class="carbon-result">
+                                <div class="result-value" id="carbonResult">0</div>
+                                <div class="result-label">kg CO₂ Emissions</div>
+                            </div>
+                            <div class="carbon-info">
+                                <p>Based on PH grid emission factor: 0.6032 kg CO₂ per kWh</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Cost Calculator Module -->
+            <section id="cost-calculator" class="module">
+                <h2>Cost & Impact Calculator</h2>
+                <div class="module-content">
+                    <div class="cost-calc">
+                        <div class="calc-section">
+                            <h3>Real-time Bill Calculation</h3>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="meterReading">Current Meter Reading (kWh)</label>
+                                    <input type="number" id="meterReading" placeholder="Enter reading" value="2450">
+                                </div>
+                                <div class="form-group">
+                                    <label for="tariffRate">Tariff Rate (₱/kWh)</label>
+                                    <input type="number" id="tariffRate" placeholder="11.00" value="11.00" step="0.01">
+                                </div>
+                            </div>
+                            <button onclick="calculateBill()" class="btn btn-primary">Calculate Bill</button>
+                            <div class="bill-result">
+                                <div class="result-value" id="billResult">₱0.00</div>
+                                <div class="result-label">Estimated Bill</div>
+                            </div>
+                        </div>
+                        <div class="calc-section">
+                            <h3>What-if Scenarios</h3>
+                            <div class="form-group">
+                                <label for="scenarioAppliance">Select Appliance</label>
+                                <select id="scenarioAppliance">
+                                    <option value="">Select an appliance</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="scenarioHours">Usage Hours (per day)</label>
+                                <input type="number" id="scenarioHours" placeholder="Enter hours" value="8">
+                            </div>
+                            <button onclick="calculateScenario()" class="btn btn-primary">Calculate Impact</button>
+                            <div class="scenario-result">
+                                <div class="result-item">
+                                    <span>Daily Cost:</span>
+                                    <span id="scenarioCost">₱0.00</span>
+                                </div>
+                                <div class="result-item">
+                                    <span>Monthly Cost:</span>
+                                    <span id="scenarioCostMonthly">₱0.00</span>
+                                </div>
+                                <div class="result-item">
+                                    <span>CO₂:</span>
+                                    <span id="scenarioCarbon">0 kg</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Notification Modal -->
+    <div id="notificationModal" class="notification-modal">
+        <div class="notification-modal-content">
+            <div class="notification-modal-header">
+                <h3>Notifications</h3>
+                <div class="notification-actions">
+                    <button class="btn-mark-all-read" onclick="markAllAsRead()">Mark All as Read</button>
+                    <button class="btn-clear-all" onclick="clearAllNotifications()">Clear All</button>
+                    <span class="close-modal" onclick="closeNotificationModal()">&times;</span>
+                </div>
+            </div>
+            <div class="notification-modal-body">
+                <div id="notificationsList" class="notifications-list">
+                    <!-- Notifications will be dynamically added here -->
+                </div>
+                <div id="emptyNotifications" class="empty-notifications">
+                    <div class="empty-icon">🔔</div>
+                    <p>No notifications yet</p>
+                    <small>You're all caught up!</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dark Mode Toggle -->
+    <div class="dark-mode-toggle">
+        <label class="toggle-switch">
+            <input type="checkbox" id="darkModeToggle">
+            <span class="toggle-slider"></span>
+            <span class="toggle-label">Dark Mode</span>
+        </label>
+    </div>
+
+
+    
+
+    <script src="https://cdn.jsdelivr.net/npm/dexie@3.2.4/dist/dexie.min.js"></script>
+    <script src="database.js"></script>
+    <script src="script.js"></script>
+    <script src="calculators.js"></script>
+</body>
+</html>

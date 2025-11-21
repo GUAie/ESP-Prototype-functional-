@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Energy Saving Pro</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Header -->
+        <header class="dashboard-header">
+            <div class="header-left">
+                <h1>Energy Saving Pro</h1>
+                <div class="header-user-info">
+                    <span class="header-welcome">Welcome, <strong id="userName"></strong></span>
+                    <span class="header-location" id="userLocation"></span>
+                </div>
+            </div>
+            <div class="header-right">
+                <div class="header-controls">
+                    <div class="inbox">
+                        <span class="inbox-count">4</span>
+                        <span class="inbox-label">Notifications</span>
+                    </div>
+                    <button class="btn btn-logout" onclick="logout()">Logout</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Sticky Navigation -->
+        <nav class="dashboard-nav">
+            <a href="dashboard.html" class="nav-item">Dashboard</a>
+            <a href="calculators.html" class="nav-item">Calculators</a>
+            <a href="preferences.html" class="nav-item">Preferences</a>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="dashboard-main">
+            <!-- Quick Stats -->
+            <section class="quick-stats">
+                <div class="stat-card">
+                    <div class="stat-icon">⚡</div>
+                    <div class="stat-info">
+                        <div class="stat-value">8.5 kWh</div>
+                        <div class="stat-label">Today's Usage</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">💰</div>
+                    <div class="stat-info">
+                        <div class="stat-value" id="currentCost">₱85.00</div>
+                        <div class="stat-label">Current Cost</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🌿</div>
+                    <div class="stat-info">
+                        <div class="stat-value">4.3 kg</div>
+                        <div class="stat-label">CO₂ Emissions</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🎯</div>
+                    <div class="stat-info">
+                        <div class="stat-value">65%</div>
+                        <div class="stat-label">Goal Progress</div>
+                    </div>
+                </div>
+            </section>
+            <!-- Appliance Management Module -->
+            <section id="appliance-management" class="module">
+                <h2>Appliance Library & Management</h2>
+                <div class="module-content">
+                    <div class="appliance-form">
+                        <h3>Add New Appliance</h3>
+                        <form id="addApplianceForm">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="applianceName">Appliance Name</label>
+                                    <input type="text" id="applianceName" placeholder="e.g., Electric Fan, Refrigerator" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="wattage">Wattage (W)</label>
+                                    <input type="number" id="wattage" placeholder="e.g., 150" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="usageHours">Total Usage (hours)</label>
+                                    <input type="number" id="usageHours" placeholder="e.g., 8" step="0.1" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="category">Category</label>
+                                    <select id="category" required>
+                                        <option value="">Select Category</option>
+                                        <option value="kitchen">Kitchen</option>
+                                        <option value="living-room">Living Room</option>
+                                        <option value="bedroom">Bedroom</option>
+                                        <option value="bathroom">Bathroom</option>
+                                        <option value="office">Office</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Add Appliance</button>
+                        </form>
+                    </div>
+                    <div class="appliance-list">
+                        <h3>Your Appliances</h3>
+                        <div id="appliancesContainer" class="appliances-grid">
+                            <!-- Appliances will be dynamically added here -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Data Visualization Module -->
+            <section id="data-visualization" class="module">
+                <h2>Data Visualization & Analytics</h2>
+                <div class="module-content">
+                    <div class="chart-container">
+                        <div class="chart-card">
+                            <h3>Appliance Usage Breakdown</h3>
+                            <canvas id="usageChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Goal Setting Module -->
+            <section id="goal-setting" class="module">
+                <h2>Goal Setting & Planning</h2>
+                <div class="module-content">
+                    <div class="goal-setup">
+                        <h3>Set New Goal</h3>
+                        <form id="goalForm">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="goalType">Goal Type</label>
+                                    <select id="goalType" required>
+                                        <option value="consumption">Energy Consumption Limit</option>
+                                        <option value="cost">Electricity Cost Limit</option>
+                                        <option value="carbon">Carbon Emissions Limit</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="goalTarget">Target Value</label>
+                                    <input type="number" id="goalTarget" placeholder="Enter target" required>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Set Goal</button>
+                        </form>
+                    </div>
+                    <div class="goal-progress">
+                        <h3>Current Goals</h3>
+                        <div id="goalsContainer">
+                            <!-- Goals will be dynamically added here -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Notification Modal -->
+    <div id="notificationModal" class="notification-modal">
+        <div class="notification-modal-content">
+            <div class="notification-modal-header">
+                <h3>Notifications</h3>
+                <div class="notification-actions">
+                    <button class="btn-mark-all-read" onclick="markAllAsRead()">Mark All as Read</button>
+                    <button class="btn-clear-all" onclick="clearAllNotifications()">Clear All</button>
+                    <span class="close-modal" onclick="closeNotificationModal()">&times;</span>
+                </div>
+            </div>
+            <div class="notification-modal-body">
+                <div id="notificationsList" class="notifications-list">
+                    <!-- Notifications will be dynamically added here -->
+                </div>
+                <div id="emptyNotifications" class="empty-notifications">
+                    <div class="empty-icon">🔔</div>
+                    <p>No notifications yet</p>
+                    <small>You're all caught up!</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dark Mode Toggle -->
+    <div class="dark-mode-toggle">
+        <label class="toggle-switch">
+            <input type="checkbox" id="darkModeToggle">
+            <span class="toggle-slider"></span>
+            <span class="toggle-label">Dark Mode</span>
+        </label>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/dexie@3.2.4/dist/dexie.min.js"></script>
+    <script src="database.js"></script>
+    <script src="script.js"></script>
+    <script src="dashboard.js"></script>
+</body>
+</html>
